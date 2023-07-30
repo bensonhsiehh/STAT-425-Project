@@ -1,0 +1,40 @@
+---
+title: "STAT_425_Team_11_Project"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Libraries
+```{r}
+library(tidyverse)
+```
+
+Dataset
+```{r}
+data <- read.csv("forestfires.csv")
+
+data
+```
+
+```{r}
+ggplot(data = data, aes(x = temp, y = area)) +
+    geom_point(color = "red") +
+    labs(title = "Temp vs Area")
+```
+
+```{r}
+ggplot(data = data, aes(x = RH, y = area)) +
+    geom_point(color = "steelblue") +
+    labs(title = "Humidity vs Area")
+```
+
+```{r}
+ggplot(data = data, aes(x = temp, y = area)) +
+    geom_point(color = "green") +
+    labs(title = "wind vs Area")
+```
+
