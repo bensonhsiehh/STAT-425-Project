@@ -51,20 +51,34 @@ summary(g1)
 plot(g1)
 ```
 
+We get the hottest months
 ```{r}
+data %>% 
+    select(month, temp) %>% 
+    group_by(month) %>% 
+    summarise(mean_temp = mean(temp) ) %>% 
+    arrange(mean_temp)
+```
+
+
+```{r}
+hot_months <- c("may", "jun", "jul", "aug", "sep", "oct") #6 hottest months
+
 df <- data %>% 
     select(everything()) %>% 
-    mutate(fire = ifelse(area > 0, 1, 0)) %>% 
-    slice_sample(prop = 0.7)
+    filter(month %in% hot_months) %>% 
+    mutate(fire = ifelse(area > 0, 1, 0))
 
 df_train <- df %>% 
     sample_frac(0.7)
 
 df_test <- anti_join(df, df_train, by = "index")
+
+df
 ```
 
 ```{r}
-gen_model <- glm(fire ~ temp * RH + wind, data = df_train, family = gaussian)
+gen_model <- glm(fire ~ temp + RH + wind + rain, data = df_train, family = gaussian)
 summary(gen_model)
 
 prob_test <- predict(gen_model, newdata = df_test, type = "response")
@@ -76,11 +90,21 @@ roc_test
 # Plot the ROC curve
 plot(roc_test)
 
-# Convert predicted probabilities to predicted binary labels using a threshold of 0.95
-pred_test <- ifelse(prob_test >= 0.95, 1, 0)
+# Convert predicted probabilities to predicted binary labels using a threshold of 0.90
+pred_test <- ifelse(prob_test >= 0.9, 1, 0)
 
 # Compute the accuracy for the model's predictions on the test set
 acc_test <- mean(pred_test == df_test$fire)
 
+```
+
+```{r}
+df_fire <- df %>% 
+    select(everything()) %>% 
+    filter(month %in% hot_months) %>% 
+    filter(fire == 1)
+
+fire_model <- lm(area ~ temp + RH + wind + rain, data = df_fire)
+summary(fire_model)
 ```
 
