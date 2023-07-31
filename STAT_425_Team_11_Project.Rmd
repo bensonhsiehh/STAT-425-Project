@@ -11,21 +11,12 @@ knitr::opts_chunk$set(echo = FALSE)
 Libraries
 ```{r}
 library(tidyverse)
-library(dplyr)
-library(ggplot2)
-library(lars)
-library(pls)
-library(glmnet)
-library(MASS)
-library(nlme)
 library(splines)
-library(readr)
 ```
 
 Dataset
 ```{r}
 data <- read.csv("forestfires.csv")
-
 data
 ```
 
@@ -48,7 +39,6 @@ ggplot(data = data, aes(x = temp, y = area)) +
 ```
 
 ```{r}
-library(dplyr)
 data1 <- filter(data, area > 0)
 w = bs(log(data1$wind),df=10, intercept=TRUE)
 t = bs(log(data1$temp),df=10, intercept=TRUE)
