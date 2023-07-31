@@ -43,8 +43,8 @@ data1 <- filter(data, area > 0)
 w = bs(log(data1$wind),df=10, intercept=TRUE)
 t = bs(log(data1$temp),df=10, intercept=TRUE)
 h = bs(log(data1$RH),df=10, intercept=TRUE)
-g1 = lm(log(area)~ (w + t + h)*factor(month), data1)
+g1 = lm(log(area)~ w*t*h, data1)
 summary(g1)
-#plot(g1)
+plot(g1)
 ```
 
