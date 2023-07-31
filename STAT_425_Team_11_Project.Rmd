@@ -35,6 +35,36 @@ ggplot(data = data, aes(x = RH, y = area)) +
 ```{r}
 ggplot(data = data, aes(x = temp, y = area)) +
     geom_point(color = "green") +
-    labs(title = "wind vs Area")
+    labs(title = "Wind vs Area")
+```
+
+```{r}
+ggplot(data = data, aes(x = ISI, y = area)) +
+    geom_point(color = "pink") +
+    labs(title = "ISI vs Area")
+```
+
+```{r}
+ggplot(data = data, aes(x = FFMC, y = area)) +
+    geom_point(color = "purple") +
+    labs(title = "FFMC vs Area")
+```
+
+```{r}
+ggplot(data = data, aes(x = DMC, y = area)) +
+    geom_point(color = "cyan") +
+    labs(title = "DMC vs Area")
+```
+
+```{r}
+ggplot(data = data, aes(x = DC, y = area)) +
+    geom_point(color = "magenta") +
+    labs(title = "DC vs Area")
+```
+
+```{r}
+ggplot(data = data, aes(x = rain, y = area)) +
+    geom_point(color = "blue") +
+    labs(title = "Rain vs Area")
 ```
 
