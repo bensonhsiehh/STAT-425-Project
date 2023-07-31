@@ -12,11 +12,14 @@ Libraries
 ```{r}
 library(tidyverse)
 library(splines)
+library(glmnet)
+library(pROC)
 ```
 
 Dataset
 ```{r}
 data <- read.csv("forestfires.csv")
+data <- tibble::rowid_to_column(data, "index")
 data
 ```
 
@@ -46,5 +49,38 @@ h = bs(log(data1$RH),df=10, intercept=TRUE)
 g1 = lm(log(area)~ w*t*h, data1)
 summary(g1)
 plot(g1)
+```
+
+```{r}
+df <- data %>% 
+    select(everything()) %>% 
+    mutate(fire = ifelse(area > 0, 1, 0)) %>% 
+    slice_sample(prop = 0.7)
+
+df_train <- df %>% 
+    sample_frac(0.7)
+
+df_test <- anti_join(df, df_train, by = "index")
+```
+
+```{r}
+gen_model <- glm(fire ~ temp * RH + wind, data = df_train, family = gaussian)
+summary(gen_model)
+
+prob_test <- predict(gen_model, newdata = df_test, type = "response")
+
+# Compute the AUC-ROC for the model's predictions on the test set
+roc_test <- roc(df_test$fire, prob_test)
+roc_test
+
+# Plot the ROC curve
+plot(roc_test)
+
+# Convert predicted probabilities to predicted binary labels using a threshold of 0.95
+pred_test <- ifelse(prob_test >= 0.95, 1, 0)
+
+# Compute the accuracy for the model's predictions on the test set
+acc_test <- mean(pred_test == df_test$fire)
+
 ```
 
