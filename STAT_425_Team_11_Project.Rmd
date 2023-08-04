@@ -125,7 +125,12 @@ df_fire <- df %>%
     filter(month %in% hot_months) %>% 
     filter(fire == 1)
 
-fire_model <- lm(area ~ temp + RH + wind + rain, data = df_fire)
+fire_model <- lm(log(area) ~ log(temp) + log(RH) + wind + I(wind^2), data = df_fire)
 summary(fire_model)
+```
+```{r}
+df_pred <- df %>% 
+    select(FFMC:area)
+cor(df_pred)
 ```
 
