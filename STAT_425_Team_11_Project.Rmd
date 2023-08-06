@@ -58,10 +58,10 @@ data1 <- filter(data, area > 0)
 w = bs(data1$wind,df=8, intercept=TRUE)
 t = bs(log(data1$temp),df=8, intercept=TRUE)
 h = bs(data1$RH,df=5, intercept=TRUE)
-g1 = lm(log(area) ~ w*t*h, data1)
+g1 = lm(log(area+1) ~ w*t*h, data1)
 summary(g1)
 #plot(g1)
-ggplot(data1, aes(x=temp, y=log(area))) + 
+ggplot(data1, aes(x=temp, y=log(area + 1))) + 
   geom_point(color = "seagreen") +
   geom_line(aes(y=predict(g1)))
 ```
@@ -70,15 +70,15 @@ Model 2
 d = bs(data1$DMC,df = 10, intercept=TRUE)
 i = bs(data1$ISI,df = 10, intercept=TRUE)
 f = bs(data1$FFMC,df = 10, intercept=TRUE)
-g2 = lm(log(area) ~ d*i*f, data1)
+g2 = lm(log(area+1) ~ d*i*f, data1)
 summary(g2)
-ggplot(data1, aes(x=FFMC, y=log(area))) + 
+ggplot(data1, aes(x=FFMC, y=log(area+1))) + 
   geom_point(color = "seagreen") +
   geom_line(aes(y=predict(g2)))
 ```
 Model 3
 ```{r}
-plot(log(area) ~ FFMC, data = data1, main = "data(cars)  &  smoothing splines")
+plot(log(area+1) ~ FFMC, data = data1, main = "data(cars)  &  smoothing splines")
 ssf10 <- smooth.spline(data1$FFMC, log(data1$area), df = 16)
 lines(ssf10, lty = 2, col = "red")
 ```
@@ -137,7 +137,7 @@ df_fire <- df %>%
     filter(month %in% hot_months) %>% 
     filter(fire == 1)
 
-fire_model <- lm(log(area) ~ log(temp) + log(RH) + wind + I(wind^2), data = df_fire)
+fire_model <- lm(log(area+1) ~ log(temp) + log(RH) + wind + I(wind^2), data = df_fire)
 summary(fire_model)
 ```
 ```{r}
