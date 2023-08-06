@@ -22,6 +22,21 @@ data <- tibble::rowid_to_column(data, "index")
 data
 ```
 
+Residual QQ plots
+```{r}
+data1 <- data[which(data$area != 0),]
+```
+
+```{r}
+full <- lm(log(area + 1)~., data1[,c(-3, -4)])
+summary(full)
+par(mfrow=c(1,1))
+plot(full, which=c(1,2,4,5))
+```
+
+
+
+
 Data Plots
 ```{r}
 ggplot(data = data1, aes(x = temp, y = log(area+1))) +
