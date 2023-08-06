@@ -24,28 +24,28 @@ data
 
 Data Plots
 ```{r}
-ggplot(data = data1, aes(x = temp, y = log(area))) +
+ggplot(data = data1, aes(x = temp, y = log(area+1))) +
     geom_point(color = "red") +
     labs(title = "Temp vs Area")
-ggplot(data = data1, aes(x = RH, y = log(area))) +
+ggplot(data = data1, aes(x = RH, y = log(area+1))) +
     geom_point(color = "steelblue") +
     labs(title = "Humidity vs Area")
-ggplot(data = data1, aes(x = wind, y = log(area))) +
+ggplot(data = data1, aes(x = wind, y = log(area+1))) +
     geom_point(color = "green") +
     labs(title = "wind vs Area")
-ggplot(data = data1, aes(x = rain, y = log(area))) +
+ggplot(data = data1, aes(x = rain, y = log(area+1))) +
     geom_point(color = "cyan") +
     labs(title = "Rain vs Area")
-ggplot(data = data1, aes(x = ISI, y = log(area))) +
+ggplot(data = data1, aes(x = ISI, y = log(area+1))) +
     geom_point(color = "darkolivegreen") +
     labs(title = "ISI vs Area")
-ggplot(data = data1, aes(x = DC, y = log(area))) +
+ggplot(data = data1, aes(x = DC, y = log(area+1))) +
     geom_point(color = "firebrick") +
     labs(title = "DC vs Area")
-ggplot(data = data1, aes(x = DMC, y = log(area))) +
+ggplot(data = data1, aes(x = DMC, y = log(area+1))) +
     geom_point(color = "goldenrod") +
     labs(title = "DMC vs Area")
-ggplot(data = data1, aes(x = FFMC, y = log(area))) +
+ggplot(data = data1, aes(x = FFMC, y = log(area+1))) +
     geom_point(color = "sienna") +
     labs(title = "FFMC vs Area")
 ggplot(data = data1, aes(x = X, y = Y)) +
