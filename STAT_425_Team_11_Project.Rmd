@@ -111,7 +111,7 @@ df
 ```
 
 ```{r}
-gen_model <- glm(fire ~ temp + RH + wind + rain, data = df_train, family = gaussian)
+gen_model <- glm(fire ~ FFMC + DMC, data = df_train, family = gaussian)
 summary(gen_model)
 
 prob_test <- predict(gen_model, newdata = df_test, type = "response")
@@ -135,14 +135,20 @@ acc_test <- mean(pred_test == df_test$fire)
 df_fire <- df %>% 
     select(everything()) %>% 
     filter(month %in% hot_months) %>% 
-    filter(fire == 1)
+    filter(fire == 1) 
 
+<<<<<<< Updated upstream
 fire_model <- lm(log(area+1) ~ log(temp) + log(RH) + wind + I(wind^2), data = df_fire)
+=======
+fire_model <- lm(log(area + 1) ~ FFMC + log(RH) + log(temp) + DC + DMC + log(rain + 1), data = df_fire)
+>>>>>>> Stashed changes
 summary(fire_model)
 ```
+
 ```{r}
 df_pred <- df %>% 
     select(FFMC:area)
 cor(df_pred)
 ```
+
 
